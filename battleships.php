@@ -8,5 +8,12 @@
 </head>
 <body>
   <script src="battleships.js" defer></script>
+  <?php
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  require ('read_grid.php');
+  getIds();
+  ?>
 </body>
 </html>
