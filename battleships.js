@@ -29,7 +29,7 @@ let tableHTML = '<div style="display: flex; flex-direction: column; align-items:
 tableHTML += '<div id="legend-scores" style="display: flex; flex-direction: row; gap: 40px; margin-bottom: 20px;">';
 
 // Scores
-tableHTML += '<div id="scoreboard" style="margin-right: 20px;">';
+tableHTML += '<div id="scoreboard" style="margin-right: 20px; text-stroke: ">';
 tableHTML += '<h3>Tableau des scores</h3>';
 tableHTML += '<p id="scores">Joueur 1 : 0</p>';
 tableHTML += '<p id="scores">Joueur 2 : 0</p>';
@@ -42,7 +42,7 @@ tableHTML += '<h3>Légende</h3>';
 tableHTML += '<ul id="ship-status">';
 
 const ships = {
-  2: { name: "Sous-marin", size: 3, remaining: 3 },
+  2: { name: " 2 Sous-marin", size: 3, remaining: 3 },
   3: { name: "Torpilleur", size: 3, remaining: 3 },
   4: { name: "Croiseur", size: 4, remaining: 4 },
   5: { name: "Porte-avion", size: 5, remaining: 5 },
@@ -65,11 +65,13 @@ tableHTML += '<div id="battle-grid" style="display: flex; gap: 20px; margin-top:
 // Grille 1
 tableHTML += '<div id="grid-1-container">';
 tableHTML += gridGenerator("grid-1");
+tableHTML += '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: #333; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid #0078D7; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); color: #0078D7; transform: scale(1.05);">MA FLOTTE</p>';
 tableHTML += "</div>";
 
 // Grille 2
 tableHTML += '<div id="grid-2-container">';
 tableHTML += gridGenerator("grid-2");
+tableHTML += '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: #333; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid red; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); color: red; transform: scale(1.05); filter: brightness(80%);">FLOTTE ADVERSE</p>';
 tableHTML += "</div>";
 
 tableHTML += "</div>";
@@ -101,9 +103,9 @@ const grid2 = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 3, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -137,9 +139,9 @@ const initializeGrid = (gridId, gridData) => {
 
     cell.addEventListener("click", function () {
       if (this.classList.contains("clicked")) return;
-
+    
       this.classList.add("clicked");
-
+    
       if (cellValue === 0) {
         this.style.background = "blue";
       } else if (cellValue in ships) {
@@ -149,14 +151,14 @@ const initializeGrid = (gridId, gridData) => {
         scores[currentPlayer]++;
         updateScores();
       }
-
+    
       currentPlayer = currentPlayer === 1 ? 2 : 1;
       updateCurrentPlayer();
-
-      if (hitCells === shipCells) {
-        alert("Partie terminée !");
+    
+      if (areAllShipsSunk()) {
+        alert("Vous avez gagné !");
       }
-    });
+    });    
   });
 };
 
