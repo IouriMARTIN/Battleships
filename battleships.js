@@ -127,10 +127,6 @@ const updateCurrentPlayer = () => {
 };
 
 // Code du Fetch() de la bataille navale
-const btn = document.getElementById("get-data");
-const btnPost = document.getElementById("post-data");
-
-// Code du Fetch() de la bataille navale
 const GetData = () => {
   fetch("./battleships.php")
     .then((response) => {
@@ -150,7 +146,6 @@ const GetData = () => {
       console.error(error);
     });
 };
-btn.addEventListener("click", () => GetData());
 
 const PostUser = async () => {
   const gameData = {
@@ -177,8 +172,6 @@ const PostUser = async () => {
     console.error(error);
   }
 };
-btnPost.addEventListener("click", () => PostUser());
-
 
 const initializeGrid = (gridId, gridData) => {
   const cells = document.querySelectorAll(`#${gridId} td`);
