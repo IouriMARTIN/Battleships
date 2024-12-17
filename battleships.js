@@ -131,7 +131,7 @@ const updateCurrentPlayer = () => {
 };
 
 // Code du Fetch() de la bataille navale
-const GetData = () => {
+/*const GetData = () => {
   fetch("./battleships.php")
     .then((response) => {
       if (!response.ok) throw new Error("Erreur réseau");
@@ -144,6 +144,7 @@ const GetData = () => {
         initializeGrid("grid-2", data.grid2);
       } else {
         console.error("Format de données inattendu");
+        console.log(data);
       }
     })
     .catch((error) => {
@@ -219,9 +220,9 @@ const initializeGrid = (gridId, gridData) => {
       }
     });
   });
-};
+};*/
 
-/*const initializeGrid = (gridId, gridData) => {
+const initializeGrid = (gridId, gridData) => {
   const cells = document.querySelectorAll(`#${gridId} td`);
   cells.forEach((cell, i) => {
     const x = Math.floor(i / 10);
@@ -255,7 +256,7 @@ const initializeGrid = (gridId, gridData) => {
       }
     });
   });
-};*/
+};
 
 const areAllShipsSunk = (gridId) => {
   const cells = document.querySelectorAll(`#${gridId} td`);
@@ -272,4 +273,4 @@ const areAllShipsSunk = (gridId) => {
 };
 
 initializeGrid("grid-1", grid1);
-envoyerBateaux();
+envoyerBateaux(grid1);
