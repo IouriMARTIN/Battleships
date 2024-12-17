@@ -132,13 +132,13 @@ const btnPost = document.getElementById("post-data");
 
 // Code du Fetch() de la bataille navale
 const GetData = () => {
-  fetch("./battleships.php") // Remplacez par l'URL de votre serveur
+  fetch("./battleships.php")
     .then((response) => {
       if (!response.ok) throw new Error("Erreur réseau");
       return response.json();
     })
     .then((data) => {
-      console.log("Grilles récupérées :", data);
+      console.log(data);
       if (data.grid1 && data.grid2) { 
         initializeGrid("grid-1", data.grid1);
         initializeGrid("grid-2", data.grid2);
@@ -147,7 +147,7 @@ const GetData = () => {
       }
     })
     .catch((error) => {
-      console.error("Erreur lors de la récupération des données :", error);
+      console.error(error);
     });
 };
 btn.addEventListener("click", () => GetData());
@@ -171,10 +171,10 @@ const PostUser = async () => {
     if (!response.ok) throw new Error("Erreur réseau lors de l'envoi");
 
     const data = await response.json();
-    console.log("Réponse du serveur :", data);
+    console.log(data);
     alert("Données envoyées avec succès !");
   } catch (error) {
-    console.error("Erreur lors de l'envoi des données :", error);
+    console.error(error);
   }
 };
 btnPost.addEventListener("click", () => PostUser());
