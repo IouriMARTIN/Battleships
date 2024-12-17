@@ -26,20 +26,38 @@ const gridGenerator = (gridId) => {
 let tableHTML =
   '<div style="display: flex; flex-direction: column; align-items: center;">';
 
-// Légende et Scores
+// Tableau des scores (en haut)
 tableHTML +=
-  '<div id="legend-scores" style="display: flex; flex-direction: row; gap: 40px; margin-bottom: 20px;">';
-
-// Scores
-tableHTML += '<div id="scoreboard" style="margin-right: 20px; text-stroke: ">';
+  '<div id="scoreboard" style="margin-bottom: 20px; text-align: center;">';
 tableHTML += "<h3>Tableau des scores</h3>";
 tableHTML += '<p id="scores">Joueur 1 : 0</p>';
 tableHTML += '<p id="scores">Joueur 2 : 0</p>';
 tableHTML += '<p id="current-turn">Tour de : Joueur 1</p>';
 tableHTML += "</div>";
 
+// Grilles (au centre)
+tableHTML +=
+  '<div id="battle-grid" style="display: flex; gap: 20px; margin-bottom: 20px;">';
+
+// Grille 1
+tableHTML += '<div id="grid-1-container">';
+tableHTML +=
+  '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: #333; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid #0078D7; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); color: #0078D7; transform: scale(1.05);">MA FLOTTE</p>';
+tableHTML += gridGenerator("grid-1");
+tableHTML += "</div>";
+
+// Grille 2
+tableHTML += '<div id="grid-2-container">';
+tableHTML +=
+  '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: red; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid red; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); transform: scale(1.05);">FLOTTE ADVERSE</p>';
+tableHTML += gridGenerator("grid-2");
+tableHTML += "</div>";
+
+tableHTML += "</div>"; 
+
 // Légende
-tableHTML += '<div id="legend" style="text-align: left;">';
+tableHTML +=
+  '<div id="legend" style="margin-top: 20px; text-align: center;">';
 tableHTML += "<h3>Légende</h3>";
 tableHTML += '<ul id="ship-status">';
 
@@ -62,26 +80,6 @@ tableHTML +=
   '<p><span style="display: inline-block; width: 15px; height: 15px; background-color: blue; margin-right: 5px;"></span>Coulé</p>';
 tableHTML += "</div>";
 
-tableHTML += "</div>";
-
-tableHTML +=
-  '<div id="battle-grid" style="display: flex; gap: 20px; margin-top: 20px;">';
-
-// Grille 1
-tableHTML += '<div id="grid-1-container">';
-tableHTML += gridGenerator("grid-1");
-tableHTML +=
-  '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: #333; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid #0078D7; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); color: #0078D7; transform: scale(1.05);">MA FLOTTE</p>';
-tableHTML += "</div>";
-
-// Grille 2
-tableHTML += '<div id="grid-2-container">';
-tableHTML += gridGenerator("grid-2");
-tableHTML +=
-  '<p style="margin-top: 10px; font-weight: bold; text-align: center; color: #333; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid red; padding-bottom: 5px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); color: red; transform: scale(1.05); filter: brightness(80%);">FLOTTE ADVERSE</p>';
-tableHTML += "</div>";
-
-tableHTML += "</div>";
 tableHTML += "</div>";
 
 const elBody = document.querySelector("body");
