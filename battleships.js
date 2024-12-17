@@ -43,9 +43,9 @@ tableHTML += '<ul id="ship-status">';
 
 const ships = {
   2: { name: " 2 Sous-marin", size: 3, remaining: 3 },
-  3: { name: "Torpilleur", size: 3, remaining: 3 },
-  4: { name: "Croiseur", size: 4, remaining: 4 },
-  5: { name: "Porte-avion", size: 5, remaining: 5 },
+  3: { name: " 1 Torpilleur", size: 3, remaining: 3 },
+  4: { name: " 1 Croiseur", size: 4, remaining: 4 },
+  5: { name: " 2 Porte-avions", size: 5, remaining: 5 }
 };
 
 Object.keys(ships).forEach((id) => {
@@ -126,6 +126,60 @@ const updateCurrentPlayer = () => {
   turnEl.textContent = `Tour de : Joueur ${currentPlayer}`;
 };
 
+// Code du Fetch() de la bataille navale
+const btn = document.getElementById("get-data");
+const btnPost = document.getElementById("post-data");
+
+// Code du Fetch() de la bataille navale
+const GetData = () => {
+  fetch("./battleships.php") // Remplacez par l'URL de votre serveur
+    .then((response) => {
+      if (!response.ok) throw new Error("Erreur réseau");
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Grilles récupérées :", data);
+      if (data.grid1 && data.grid2) { 
+        initializeGrid("grid-1", data.grid1);
+        initializeGrid("grid-2", data.grid2);
+      } else {
+        console.error("Format de données inattendu");
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la récupération des données :", error);
+    });
+};
+btn.addEventListener("click", () => GetData());
+
+const PostUser = async () => {
+  const gameData = {
+    player: "Joueur 1",
+    score: scores[1],
+    action: "tir", 
+  };
+
+  try {
+    const response = await fetch("./battleships.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gameData),
+    });
+
+    if (!response.ok) throw new Error("Erreur réseau lors de l'envoi");
+
+    const data = await response.json();
+    console.log("Réponse du serveur :", data);
+    alert("Données envoyées avec succès !");
+  } catch (error) {
+    console.error("Erreur lors de l'envoi des données :", error);
+  }
+};
+btnPost.addEventListener("click", () => PostUser());
+
+
 const initializeGrid = (gridId, gridData) => {
   const cells = document.querySelectorAll(`#${gridId} td`);
   cells.forEach((cell, i) => {
@@ -155,11 +209,27 @@ const initializeGrid = (gridId, gridData) => {
       currentPlayer = currentPlayer === 1 ? 2 : 1;
       updateCurrentPlayer();
     
-      if (areAllShipsSunk()) {
+      if (areAllShipsSunk("grid-1")) {
         alert("Vous avez gagné !");
-      }
+      }      
     });    
   });
 };
 
+const areAllShipsSunk = (gridId) => {
+  const cells = document.querySelectorAll(`#${gridId} td`);
+  const shipsRemaining = {};
+
+  cells.forEach((cell) => {
+    const cellValue = parseInt(cell.getAttribute("data-id"));
+    if (!cell.classList.contains("clicked") && cellValue > 0) {
+      shipsRemaining[cellValue] = (shipsRemaining[cellValue] || 0) + 1;
+    }
+  });
+
+  return Object.keys(ships).every((id) => shipsRemaining[id] === undefined);
+};
+
 initializeGrid("grid-1", grid1);
+envoyerBateaux(grid1);
+envoyerBateaux(grid2);
