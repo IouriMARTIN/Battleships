@@ -226,5 +226,4 @@ const areAllShipsSunk = (gridId) => {
 };
 
 initializeGrid("grid-1", grid1);
-envoyerBateaux(grid1);
-envoyerBateaux(grid2);
+envoyerBateaux();
