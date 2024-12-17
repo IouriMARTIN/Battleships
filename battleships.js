@@ -154,23 +154,25 @@ const PostUser = async () => {
     action: "tir", 
   };
 
-  try {
-    const response = await fetch("./battleships.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(gameData),
-    });
-
-    if (!response.ok) throw new Error("Erreur réseau lors de l'envoi");
-
-    const data = await response.json();
-    console.log(data);
-    alert("Données envoyées avec succès !");
-  } catch (error) {
-    console.error(error);
-  }
+  const envoyerBateaux = async (grid) => {
+    try {
+      const response = await fetch("./battleships.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ grid: grid }),
+      });
+  
+      if (!response.ok) throw new Error("Erreur lors de l'envoi des bateaux au serveur");
+  
+      const data = await response.json();
+      console.log("Réponse du serveur :", data);
+      alert("Grille envoyée avec succès !");
+    } catch (error) {
+      console.error(error);
+    }
+  };  
 };
 
 const initializeGrid = (gridId, gridData) => {
